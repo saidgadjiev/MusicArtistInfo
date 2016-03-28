@@ -34,8 +34,17 @@ public class MainActivity extends BaseActivity implements IMainActivityView, IHa
 
         toolbar.setTitle("Исполнители");
         setSupportActionBar(toolbar);
-
         fragmentManager = getFragmentManager();
+        ListFragment listFragment = (ListFragment) fragmentManager.findFragmentByTag("ListFragment");
+
+        if (listFragment == null) {
+            listFragment = new ListFragment();
+        }
+        if (savedInstanceState == null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, listFragment)
+                    .commit();
+        }
     }
 
     @Override
@@ -49,7 +58,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, IHa
 
     @Override
     public IMainActivityComponent getComponent() {
-        return null;
+        return mainActivityComponent;
     }
 
     @Override
