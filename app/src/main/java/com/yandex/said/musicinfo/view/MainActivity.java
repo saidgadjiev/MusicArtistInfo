@@ -1,9 +1,7 @@
 package com.yandex.said.musicinfo.view;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.yandex.said.musicinfo.R;

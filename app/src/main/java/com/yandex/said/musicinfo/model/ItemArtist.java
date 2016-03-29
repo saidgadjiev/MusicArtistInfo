@@ -12,7 +12,7 @@ public class ItemArtist {
     private int id;
     private Bitmap image;
     private String name;
-    private ArrayList<String> genres;
+    private String genre;
     private int countAlbums;
     private int countTracks;
 
@@ -64,11 +64,11 @@ public class ItemArtist {
         this.countTracks = countTracks;
     }
 
-    public ArrayList<String> getGenres() {
-        return genres;
+    public String getGenre() {
+        return genre;
     }
 
-    public void addGenres(String genre) {
-        genres.add(genre);
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.yandex.said.musicinfo.R;
 import com.yandex.said.musicinfo.model.ItemArtist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +20,7 @@ import java.util.List;
  */
 public class MusicInfoListAdapter extends BaseAdapter {
 
-    List<ItemArtist> itemArtistList;
+    ArrayList<ItemArtist> itemArtistList;
     private LayoutInflater layoutInflater;
     private Activity activity;
     protected int totalListSize;
@@ -25,7 +28,7 @@ public class MusicInfoListAdapter extends BaseAdapter {
     public static final int VIEW_TYPE_LOADING = 0;
     public static final int VIEW_TYPE_ACTIVITY = 1;
 
-    public MusicInfoListAdapter(Activity activity, List<ItemArtist> itemArtistList, int totalListSize) {
+    public MusicInfoListAdapter(Activity activity, ArrayList<ItemArtist> itemArtistList, int totalListSize) {
         this.activity = activity;
         this.layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemArtistList = itemArtistList;
@@ -49,7 +52,7 @@ public class MusicInfoListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return itemArtistList.size() + 1;
+        return itemArtistList.size();
     }
 
     @Override
@@ -65,9 +68,21 @@ public class MusicInfoListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
+
         if (view == null) {
             view = layoutInflater.inflate(R.layout.item_musicinfo_list, parent, false);
         }
+        //ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
+        TextView name = (TextView) view.findViewById(R.id.name);
+        TextView genre = (TextView) view.findViewById(R.id.genres);
+        TextView albums = (TextView) view.findViewById(R.id.albums);
+        TextView tracks = (TextView) view.findViewById(R.id.tracks);
+
+        //avatar.setImageBitmap(itemArtistList.get(position).getImage());
+        name.setText(itemArtistList.get(position).getName());
+        genre.setText(itemArtistList.get(position).getGenre());
+        albums.setText(itemArtistList.get(position).getCountAlbums());
+        tracks.setText(itemArtistList.get(position).getCountTracks());
 
         return view;
     }

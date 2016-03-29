@@ -2,6 +2,8 @@ package com.yandex.said.musicinfo.di.components;
 
 import com.yandex.said.musicinfo.di.ActivityScope;
 import com.yandex.said.musicinfo.di.modules.MainActivityModule;
+import com.yandex.said.musicinfo.presenter.ListFragmentPresenterImpl;
+import com.yandex.said.musicinfo.view.ListFragment;
 import com.yandex.said.musicinfo.view.MainActivity;
 
 import dagger.Component;
@@ -17,4 +19,5 @@ import dagger.Component;
 )
 public interface IMainActivityComponent {
     void inject(MainActivity activity);
+    void inject(ListFragment fragment);
 }

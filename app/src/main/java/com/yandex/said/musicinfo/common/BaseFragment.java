@@ -1,7 +1,6 @@
 package com.yandex.said.musicinfo.common;
 
 import android.app.Fragment;
-import android.os.Bundle;
 
 import com.yandex.said.musicinfo.di.IHasComponent;
 
