@@ -74,14 +74,14 @@ public class MusicInfoListAdapter extends BaseAdapter {
         }
         //ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
         TextView name = (TextView) view.findViewById(R.id.name);
-        TextView genre = (TextView) view.findViewById(R.id.genres);
+        //TextView genre = (TextView) view.findViewById(R.id.genres);
         TextView albums = (TextView) view.findViewById(R.id.albums);
         TextView tracks = (TextView) view.findViewById(R.id.tracks);
 
         //avatar.setImageBitmap(itemArtistList.get(position).getImage());
         name.setText(itemArtistList.get(position).getName());
-        albums.setText(itemArtistList.get(position).getCountAlbums());
-        tracks.setText(itemArtistList.get(position).getCountTracks());
+        albums.setText(String.valueOf(itemArtistList.get(position).getCountAlbums()));
+        tracks.setText(String.valueOf(itemArtistList.get(position).getCountTracks()));
 
         return view;
     }

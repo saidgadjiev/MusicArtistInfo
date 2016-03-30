@@ -127,6 +127,7 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
     public void setMusicInfoListAdapter(List<ItemArtist> itemArtists, int totalArtists) {
         if (adapter == null) {
             adapter = new MusicInfoListAdapter(getActivity(), itemArtists, totalArtists);
+            listView.setAdapter(adapter);
         }
     }
 }
