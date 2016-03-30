@@ -3,6 +3,7 @@ package com.yandex.said.musicinfo.model;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by said on 26.03.16.
@@ -10,11 +11,14 @@ import java.util.ArrayList;
 public class ItemArtist {
 
     private int id;
-    private Bitmap image;
     private String name;
-    private String genre;
-    private int countAlbums;
+    private List<String> genres;
     private int countTracks;
+    private int countAlbums;
+    private String link;
+    private String description;
+    private String smallAvatarUrl;
+    private String bigAvatarUrl;
 
     public ItemArtist() {
     }
@@ -40,20 +44,12 @@ public class ItemArtist {
         this.name = name;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public List<String> getGenres() {
+        return genres;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
-
-    public int getCountAlbums() {
-        return countAlbums;
-    }
-
-    public void setCountAlbums(int countAlbums) {
-        this.countAlbums = countAlbums;
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
     }
 
     public int getCountTracks() {
@@ -64,11 +60,43 @@ public class ItemArtist {
         this.countTracks = countTracks;
     }
 
-    public String getGenre() {
-        return genre;
+    public int getCountAlbums() {
+        return countAlbums;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setCountAlbums(int countAlbums) {
+        this.countAlbums = countAlbums;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setSmallAvatarUrl(String smallAvatarUrl) {
+        this.smallAvatarUrl = smallAvatarUrl;
+    }
+
+    public String getSmallAvatarUrl() {
+        return smallAvatarUrl;
+    }
+
+    public void setBigAvatarUrl(String bigAvatarUrl) {
+        this.bigAvatarUrl = bigAvatarUrl;
+    }
+
+    public String getBigAvatarUrl() {
+        return bigAvatarUrl;
     }
 }

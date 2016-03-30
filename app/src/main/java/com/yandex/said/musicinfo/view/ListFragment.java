@@ -22,6 +22,7 @@ import com.yandex.said.musicinfo.network.MusicInfoService;
 import com.yandex.said.musicinfo.presenter.ListFragmentPresenterImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -123,7 +124,7 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
     }
 
     @Override
-    public void setMusicInfoListAdapter(ArrayList<ItemArtist> itemArtists, int totalArtists) {
+    public void setMusicInfoListAdapter(List<ItemArtist> itemArtists, int totalArtists) {
         if (adapter == null) {
             adapter = new MusicInfoListAdapter(getActivity(), itemArtists, totalArtists);
         }

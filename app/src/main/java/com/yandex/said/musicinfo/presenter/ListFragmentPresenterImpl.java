@@ -2,11 +2,20 @@ package com.yandex.said.musicinfo.presenter;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.octo.android.robospice.request.simple.SimpleTextRequest;
+import com.yandex.said.musicinfo.model.ItemArtist;
 import com.yandex.said.musicinfo.view.IListFragmentView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by said on 26.03.16.
@@ -28,7 +37,7 @@ public class ListFragmentPresenterImpl implements IListFragmentPresenter {
     public void onResume(SpiceManager spiceManager) {
         view.startService();
         this.spiceManager = spiceManager;
-        sendRequest(URL_MUSICINFO_LIST_API, spiceManager);
+        sendRequest(spiceManager);
     }
 
     @Override
@@ -36,11 +45,11 @@ public class ListFragmentPresenterImpl implements IListFragmentPresenter {
         view.stopService();
     }
 
-    private void sendRequest(String url, SpiceManager spiceManager) {
-        SimpleTextRequest textRequest = new SimpleTextRequest("http://brottys.ru/jsontest/");
+    private void sendRequest(SpiceManager spiceManager) {
+        SimpleTextRequest textRequest = new SimpleTextRequest(URL_MUSICINFO_LIST_API);
 
         view.showProgressDialog();
-        spiceManager.execute(textRequest, new MusicInfoApiJsonRequestListener());
+        spiceManager.execute(textRequest, CACHE_KEY, DurationInMillis.ONE_HOUR, new MusicInfoApiJsonRequestListener());
     }
 
     private final class MusicInfoApiJsonRequestListener implements RequestListener<String> {
@@ -54,7 +63,49 @@ public class ListFragmentPresenterImpl implements IListFragmentPresenter {
         @Override
         public void onRequestSuccess(String s) {
             view.hideProgressDialog();
-            Log.d(TAG, "Request success");
+            List<ItemArtist> itemArtists = getArrayListFromJson(s);
+            view.setMusicInfoListAdapter(itemArtists, itemArtists.size());
+        }
+
+        private List<ItemArtist> getArrayListFromJson(String jsonString) {
+            List<ItemArtist> itemArtistsList = new ArrayList<>();
+            JsonArray jsonArrayArtists = new Gson().fromJson(jsonString, JsonArray.class);
+            JsonObject jsonObject;
+
+            for (JsonElement jsonElement: jsonArrayArtists) {
+                jsonObject = jsonElement.getAsJsonObject();
+                int id = jsonObject.get("id").getAsInt();
+                String name = jsonObject.get("name").getAsString();
+                JsonArray jsonArrayGenres = jsonObject.getAsJsonArray("genres");
+                List<String> genres = new ArrayList<>();
+
+                for (JsonElement jsonGenre: jsonArrayGenres) {
+                    genres.add(jsonGenre.getAsString());
+                }
+                int tracks = jsonObject.get("tracks").getAsInt();
+                int albums = jsonObject.get("albums").getAsInt();
+                String link = "No link";
+                if (jsonObject.has("link")) { //artist with id 1150 name=Keri Hilson doesn't have a link
+                    link = jsonObject.get("link").getAsString();
+                }
+                String description = jsonObject.get("description").getAsString();
+                String smallAvatarUrl = jsonObject.getAsJsonObject("cover").get("small").getAsString();
+                String bigAvatrUrl = jsonObject.getAsJsonObject("cover").get("big").getAsString();
+                ItemArtist itemArtist = new ItemArtist();
+
+                itemArtist.setId(id);
+                itemArtist.setName(name);
+                itemArtist.setGenres(genres);
+                itemArtist.setCountTracks(tracks);
+                itemArtist.setCountAlbums(albums);
+                itemArtist.setLink(link);
+                itemArtist.setDescription(description);
+                itemArtist.setSmallAvatarUrl(smallAvatarUrl);
+                itemArtist.setBigAvatarUrl(bigAvatrUrl);
+                itemArtistsList.add(itemArtist);
+            }
+
+            return itemArtistsList;
         }
     }
 }

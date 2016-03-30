@@ -13,5 +13,5 @@ public interface IListFragmentView {
     void hideProgressDialog();
     void startService();
     void stopService();
-    void setMusicInfoListAdapter(ArrayList<ItemArtist> itemArtists, int totalArtists);
+    void setMusicInfoListAdapter(List<ItemArtist> itemArtists, int totalArtists);
 }

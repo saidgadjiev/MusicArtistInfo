@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class MusicInfoListAdapter extends BaseAdapter {
 
-    ArrayList<ItemArtist> itemArtistList;
+    private List<ItemArtist> itemArtistList;
     private LayoutInflater layoutInflater;
     private Activity activity;
     protected int totalListSize;
@@ -28,7 +28,7 @@ public class MusicInfoListAdapter extends BaseAdapter {
     public static final int VIEW_TYPE_LOADING = 0;
     public static final int VIEW_TYPE_ACTIVITY = 1;
 
-    public MusicInfoListAdapter(Activity activity, ArrayList<ItemArtist> itemArtistList, int totalListSize) {
+    public MusicInfoListAdapter(Activity activity, List<ItemArtist> itemArtistList, int totalListSize) {
         this.activity = activity;
         this.layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemArtistList = itemArtistList;
@@ -80,7 +80,6 @@ public class MusicInfoListAdapter extends BaseAdapter {
 
         //avatar.setImageBitmap(itemArtistList.get(position).getImage());
         name.setText(itemArtistList.get(position).getName());
-        genre.setText(itemArtistList.get(position).getGenre());
         albums.setText(itemArtistList.get(position).getCountAlbums());
         tracks.setText(itemArtistList.get(position).getCountTracks());
 
