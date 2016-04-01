@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.yandex.said.musicinfo.R;
 import com.yandex.said.musicinfo.model.ItemArtist;
 
@@ -24,6 +25,7 @@ public class MusicInfoListAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Activity activity;
     protected int totalListSize;
+    Picasso picasso;
 
     public static final int VIEW_TYPE_LOADING = 0;
     public static final int VIEW_TYPE_ACTIVITY = 1;
@@ -33,6 +35,7 @@ public class MusicInfoListAdapter extends BaseAdapter {
         this.layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemArtistList = itemArtistList;
         this.totalListSize = totalListSize;
+        picasso = Picasso.with(activity);
     }
 
     @Override
@@ -72,13 +75,16 @@ public class MusicInfoListAdapter extends BaseAdapter {
         if (view == null) {
             view = layoutInflater.inflate(R.layout.item_musicinfo_list, parent, false);
         }
-        //ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
+        ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
         TextView name = (TextView) view.findViewById(R.id.name);
         //TextView genre = (TextView) view.findViewById(R.id.genres);
         TextView albums = (TextView) view.findViewById(R.id.albums);
         TextView tracks = (TextView) view.findViewById(R.id.tracks);
 
         //avatar.setImageBitmap(itemArtistList.get(position).getImage());
+        picasso.load(itemArtistList.get(position).getSmallAvatarUrl())
+                .placeholder(R.mipmap.ic_launcher)
+                .into(avatar);
         name.setText(itemArtistList.get(position).getName());
         albums.setText(String.valueOf(itemArtistList.get(position).getCountAlbums()));
         tracks.setText(String.valueOf(itemArtistList.get(position).getCountTracks()));

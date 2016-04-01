@@ -54,4 +54,5 @@ dependencies {
     compile ('com.octo.android.robospice:robospice:1.4.5'){
         exclude module: 'support-v4'
     }
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

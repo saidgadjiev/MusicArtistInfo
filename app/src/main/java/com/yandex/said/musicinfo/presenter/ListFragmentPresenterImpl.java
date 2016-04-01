@@ -49,7 +49,10 @@ public class ListFragmentPresenterImpl implements IListFragmentPresenter {
         SimpleTextRequest textRequest = new SimpleTextRequest(URL_MUSICINFO_LIST_API);
 
         view.showProgressDialog();
-        spiceManager.execute(textRequest, CACHE_KEY, DurationInMillis.ONE_HOUR, new MusicInfoApiJsonRequestListener());
+        spiceManager.getFromCacheAndLoadFromNetworkIfExpired(textRequest,
+                CACHE_KEY,
+                DurationInMillis.ONE_WEEK,
+                new MusicInfoApiJsonRequestListener());
     }
 
     private final class MusicInfoApiJsonRequestListener implements RequestListener<String> {
@@ -64,7 +67,7 @@ public class ListFragmentPresenterImpl implements IListFragmentPresenter {
         public void onRequestSuccess(String s) {
             view.hideProgressDialog();
             List<ItemArtist> itemArtists = getArrayListFromJson(s);
-            view.setMusicInfoListAdapter(itemArtists, itemArtists.size());
+            view.setMusicInfoListAdapter(itemArtists.subList(0, 15), 15);
         }
 
         private List<ItemArtist> getArrayListFromJson(String jsonString) {
