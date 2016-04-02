@@ -1,14 +1,14 @@
 package com.yandex.said.musicinfo.view;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -21,7 +21,6 @@ import com.yandex.said.musicinfo.model.ItemArtist;
 import com.yandex.said.musicinfo.network.MusicInfoService;
 import com.yandex.said.musicinfo.presenter.ListFragmentPresenterImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,8 +36,9 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
     protected SpiceManager spiceManager = new SpiceManager(MusicInfoService.class);
 
     Activity activity;
+    RecyclerView recyclerView;
     MusicInfoListAdapter adapter;
-    ListView listView;
+    RecyclerView.LayoutManager layoutManager;
     View rootView;
 
     public ListFragment() {
@@ -71,7 +71,11 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_list, container, false);
-            listView = (ListView) rootView.findViewById(R.id.artisit_listview);
+            recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+
+            recyclerView.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(activity);
+            recyclerView.setLayoutManager(layoutManager);
         }
         return rootView;
     }
@@ -127,7 +131,7 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
     public void setMusicInfoListAdapter(List<ItemArtist> itemArtists, int totalArtists) {
         if (adapter == null) {
             adapter = new MusicInfoListAdapter(getActivity(), itemArtists, totalArtists);
-            listView.setAdapter(adapter);
+            recyclerView.setAdapter(adapter);
         }
     }
 }

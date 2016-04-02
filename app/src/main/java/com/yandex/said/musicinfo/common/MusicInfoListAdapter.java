@@ -2,12 +2,16 @@ package com.yandex.said.musicinfo.common;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.yandex.said.musicinfo.R;
@@ -16,10 +20,12 @@ import com.yandex.said.musicinfo.model.ItemArtist;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.callback.Callback;
+
 /**
  * Created by said on 28.03.16.
  */
-public class MusicInfoListAdapter extends BaseAdapter {
+public class MusicInfoListAdapter extends RecyclerView.Adapter<MusicInfoListAdapter.ViewHolder> {
 
     private List<ItemArtist> itemArtistList;
     private LayoutInflater layoutInflater;
@@ -39,13 +45,28 @@ public class MusicInfoListAdapter extends BaseAdapter {
     }
 
     @Override
-    public boolean isEnabled(int position) {
-        return getItemViewType(position) == VIEW_TYPE_ACTIVITY;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = layoutInflater.inflate(R.layout.item_musicinfo_list, null);
+        return new ViewHolder(view);
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 2;
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        StringBuffer allGenres = new StringBuffer();
+
+        for (String genre : itemArtistList.get(position).getGenres()) {
+            allGenres.append(genre);
+            allGenres.append(", ");
+        }
+        holder.genres.setText(allGenres.substring(0, allGenres.length() - 2));
+        picasso.load(itemArtistList.get(position).getSmallAvatarUrl())
+                .placeholder(R.mipmap.ic_launcher)
+                .into(holder.avatar);
+        holder.name.setText(itemArtistList.get(position).getName());
+        String albumsText = String.valueOf(itemArtistList.get(position).getCountAlbums()) + " альбомов, ";
+        String tracksText = String.valueOf(itemArtistList.get(position).getCountTracks()) + " треков";
+        holder.albums.setText(albumsText);
+        holder.tracks.setText(tracksText);
     }
 
     @Override
@@ -54,45 +75,30 @@ public class MusicInfoListAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return itemArtistList.size();
-    }
-
-    @Override
-    public ItemArtist getItem(int position) {
-        return (getItemViewType(position) == VIEW_TYPE_ACTIVITY) ? itemArtistList.get(position) : null;
-    }
-
-    @Override
     public long getItemId(int position) {
         return (getItemViewType(position) == VIEW_TYPE_ACTIVITY) ? position : -1;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-
-        if (view == null) {
-            view = layoutInflater.inflate(R.layout.item_musicinfo_list, parent, false);
-        }
-        ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
-        TextView name = (TextView) view.findViewById(R.id.name);
-        //TextView genre = (TextView) view.findViewById(R.id.genres);
-        TextView albums = (TextView) view.findViewById(R.id.albums);
-        TextView tracks = (TextView) view.findViewById(R.id.tracks);
-
-        //avatar.setImageBitmap(itemArtistList.get(position).getImage());
-        picasso.load(itemArtistList.get(position).getSmallAvatarUrl())
-                .placeholder(R.mipmap.ic_launcher)
-                .into(avatar);
-        name.setText(itemArtistList.get(position).getName());
-        albums.setText(String.valueOf(itemArtistList.get(position).getCountAlbums()));
-        tracks.setText(String.valueOf(itemArtistList.get(position).getCountTracks()));
-
-        return view;
+    public int getItemCount() {
+        return itemArtistList.size();
     }
 
-    public void add(List<ItemArtist> itemArtists) {
-        this.itemArtistList.addAll(itemArtists);
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView avatar;
+        TextView name;
+        TextView genres;
+        TextView albums;
+        TextView tracks;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            avatar = (ImageView) itemView.findViewById(R.id.avatar);
+            name = (TextView) itemView.findViewById(R.id.name);
+            genres = (TextView) itemView.findViewById(R.id.genres);
+            albums = (TextView) itemView.findViewById(R.id.albums);
+            tracks = (TextView) itemView.findViewById(R.id.tracks);
+        }
     }
 }

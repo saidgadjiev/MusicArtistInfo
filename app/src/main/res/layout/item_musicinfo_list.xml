@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@mipmap/ic_launcher"/>
-    
-    <TextView
-        android:id="@+id/name"
-        android:layout_marginTop="20dp"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/avatar"
-        android:layout_toEndOf="@+id/avatar"
-        android:text="Name"/>
+        card_view:cardElevation="5dp">
 
-    <TextView
-        android:id="@+id/genres"
-        android:text="Genres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/avatar"
-        android:layout_toEndOf="@+id/avatar"
-        android:layout_below="@+id/name"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/albums"
-        android:text="Albums,"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/avatar"
-        android:layout_toEndOf="@+id/avatar"
-        android:layout_below="@+id/genres"/>
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"/>
 
-    <TextView
-        android:id="@+id/tracks"
-        android:text="tracks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/albums"
-        android:layout_toEndOf="@+id/avatar"
-        android:paddingLeft="8dp"
-        android:layout_below="@+id/genres"/>
+            <TextView
+                android:id="@+id/name"
+                android:paddingTop="10dp"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/avatar"
+                android:layout_toRightOf="@+id/avatar"
+                android:text="Name" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/genres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:layout_toEndOf="@+id/avatar"
+                android:layout_toRightOf="@+id/avatar" />
+
+            <TextView
+                android:id="@+id/albums"
+                android:paddingTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/genres"
+                android:layout_toEndOf="@+id/avatar"
+                android:layout_toRightOf="@+id/avatar"
+                android:text="Albums," />
+
+            <TextView
+                android:id="@+id/tracks"
+                android:paddingTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/genres"
+                android:layout_toEndOf="@+id/avatar"
+                android:layout_toRightOf="@+id/albums"
+                android:paddingLeft="8dp"
+                android:text="tracks" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
