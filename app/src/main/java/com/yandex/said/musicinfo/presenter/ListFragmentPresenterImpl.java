@@ -45,6 +45,10 @@ public class ListFragmentPresenterImpl implements IListFragmentPresenter {
         view.stopService();
     }
 
+    @Override
+    public void onItemClick(int position) {
+    }
+
     private void sendRequest(SpiceManager spiceManager) {
         SimpleTextRequest textRequest = new SimpleTextRequest(URL_MUSICINFO_LIST_API);
 

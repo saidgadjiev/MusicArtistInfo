@@ -10,4 +10,5 @@ import com.yandex.said.musicinfo.view.IListFragmentView;
 public interface IListFragmentPresenter extends BaseFragmentPresenter<IListFragmentView> {
     void onResume(SpiceManager spiceManager);
     void onPause();
+    void onItemClick(int position);
 }
