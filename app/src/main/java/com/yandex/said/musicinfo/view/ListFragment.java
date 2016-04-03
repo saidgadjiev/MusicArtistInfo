@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
 import com.yandex.said.musicinfo.R;
@@ -28,7 +29,7 @@ import javax.inject.Inject;
 /**
  * Created by said on 26.03.16.
  */
-public class ListFragment extends BaseFragment implements IListFragmentView {
+public class ListFragment extends BaseFragment implements IListFragmentView, MusicInfoListAdapter.ClickListener{
 
     @Inject
     ListFragmentPresenterImpl presenter;
@@ -130,8 +131,13 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
     @Override
     public void setMusicInfoListAdapter(List<ItemArtist> itemArtists, int totalArtists) {
         if (adapter == null) {
-            adapter = new MusicInfoListAdapter(getActivity(), itemArtists, totalArtists);
+            adapter = new MusicInfoListAdapter(getActivity(), this, itemArtists, totalArtists);
             recyclerView.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        Toast.makeText(activity, "Click " + String.valueOf(position), Toast.LENGTH_SHORT).show();
     }
 }
