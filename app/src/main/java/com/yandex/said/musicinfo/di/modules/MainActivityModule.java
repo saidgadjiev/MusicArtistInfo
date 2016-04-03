@@ -1,5 +1,6 @@
 package com.yandex.said.musicinfo.di.modules;
 
+import com.yandex.said.musicinfo.presenter.DetailFragmentPresenterImpl;
 import com.yandex.said.musicinfo.presenter.IMainActivityPresenter;
 import com.yandex.said.musicinfo.presenter.ListFragmentPresenterImpl;
 import com.yandex.said.musicinfo.presenter.MainActivityPresenterImpl;
@@ -35,5 +36,10 @@ public class MainActivityModule {
     @Provides
     public ListFragmentPresenterImpl provideListFragmentPresenterImpl() {
         return new ListFragmentPresenterImpl();
+    }
+
+    @Provides
+    public DetailFragmentPresenterImpl provideDetailFragmentPresenterImpl() {
+        return new DetailFragmentPresenterImpl();
     }
 }

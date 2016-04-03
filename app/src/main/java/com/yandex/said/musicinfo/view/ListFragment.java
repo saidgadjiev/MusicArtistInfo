@@ -1,6 +1,8 @@
 package com.yandex.said.musicinfo.view;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -137,7 +139,18 @@ public class ListFragment extends BaseFragment implements IListFragmentView, Mus
     }
 
     @Override
+    public void replaceToDetailFragment(int position) {
+        FragmentManager fragmentManager = activity.getFragmentManager();
+        DetailFragment detailFragment = DetailFragment.newInstance(adapter.getItem(position));
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, detailFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
     public void onItemClicked(int position) {
-        Toast.makeText(activity, "Click " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+        presenter.onItemClick(position);
     }
 }

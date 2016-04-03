@@ -14,4 +14,5 @@ public interface IListFragmentView {
     void startService();
     void stopService();
     void setMusicInfoListAdapter(List<ItemArtist> itemArtists, int totalArtists);
+    void replaceToDetailFragment(int position);
 }

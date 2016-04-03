@@ -2,13 +2,14 @@ package com.yandex.said.musicinfo.model;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by said on 26.03.16.
  */
-public class ItemArtist {
+public class ItemArtist implements Serializable {
     private int id;
     private String name;
     private List<String> genres;

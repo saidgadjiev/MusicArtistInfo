@@ -47,6 +47,7 @@ public class ListFragmentPresenterImpl implements IListFragmentPresenter {
 
     @Override
     public void onItemClick(int position) {
+        view.replaceToDetailFragment(position);
     }
 
     private void sendRequest(SpiceManager spiceManager) {

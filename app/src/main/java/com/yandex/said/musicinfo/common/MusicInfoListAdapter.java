@@ -80,6 +80,10 @@ public class MusicInfoListAdapter extends RecyclerView.Adapter<MusicInfoListAdap
         return (getItemViewType(position) == VIEW_TYPE_ACTIVITY) ? position : -1;
     }
 
+    public ItemArtist getItem(int positoin) {
+        return itemArtistList.get(positoin);
+    }
+
     @Override
     public int getItemCount() {
         return itemArtistList.size();

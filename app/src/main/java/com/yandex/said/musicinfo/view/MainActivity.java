@@ -61,6 +61,6 @@ public class MainActivity extends BaseActivity implements IMainActivityView, IHa
 
     @Override
     public void popFragmentFromStack() {
-
+        fragmentManager.popBackStack();
     }
 }
