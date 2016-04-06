@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,9 +58,11 @@ public class MusicInfoListAdapter extends RecyclerView.Adapter<MusicInfoListAdap
 
         for (String genre : itemArtistList.get(position).getGenres()) {
             allGenres.append(genre);
-            allGenres.append(", ");
+            if (!itemArtistList.get(position).getGenres().get(itemArtistList.get(position).getGenres().size() - 1).equals(genre)) {
+                allGenres.append(", ");
+            }
         }
-        holder.genres.setText(allGenres.substring(0, allGenres.length() - 2));
+        holder.genres.setText(allGenres.toString());
         picasso.load(itemArtistList.get(position).getSmallAvatarUrl())
                 .placeholder(R.mipmap.ic_launcher)
                 .into(holder.avatar);

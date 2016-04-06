@@ -83,9 +83,11 @@ public class DetailFragment extends BaseFragment implements IDetailFragmentView 
 
         for (String genre : itemArtist.getGenres()) {
             allGenres.append(genre);
-            allGenres.append(", ");
+            if (!itemArtist.getGenres().get(itemArtist.getGenres().size() - 1).equals(genre)) {
+                allGenres.append(", ");
+            }
         }
-        genres.setText(allGenres.substring(0, allGenres.length() - 2));
+        genres.setText(allGenres.toString());
         albums.setText(String.valueOf(itemArtist.getCountAlbums()));
         tracks.setText(String.valueOf(itemArtist.getCountTracks()));
         biography.setText(itemArtist.getDescription());

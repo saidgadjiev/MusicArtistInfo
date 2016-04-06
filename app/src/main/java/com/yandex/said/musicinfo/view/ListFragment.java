@@ -3,6 +3,7 @@ package com.yandex.said.musicinfo.view;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -95,6 +97,7 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
             recyclerView.addOnItemTouchListener(new RecyclerTouchListener(activity.getApplicationContext(), recyclerView, new ClickListener() {
                 @Override
                 public void onClick(View view, int position) {
+                    rootView.playSoundEffect(SoundEffectConstants.CLICK);
                     presenter.onItemClick(position);
                 }
 

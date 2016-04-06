@@ -72,7 +72,7 @@ public class ListFragmentPresenterImpl implements IListFragmentPresenter {
         public void onRequestSuccess(String s) {
             view.hideProgressDialog();
             List<ItemArtist> itemArtists = getArrayListFromJson(s);
-            view.setMusicInfoListAdapter(itemArtists.subList(0, 15), 15);
+            view.setMusicInfoListAdapter(itemArtists, itemArtists.size());
         }
 
         private List<ItemArtist> getArrayListFromJson(String jsonString) {
