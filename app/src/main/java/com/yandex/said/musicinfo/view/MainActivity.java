@@ -46,6 +46,15 @@ public class MainActivity extends BaseActivity implements IMainActivityView, IHa
     }
 
     @Override
+    public void onBackPressed() {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            presenter.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void setupComponent(IMusicInfoAppComponent component) {
         mainActivityComponent = DaggerIMainActivityComponent.builder()
                 .iMusicInfoAppComponent(component)

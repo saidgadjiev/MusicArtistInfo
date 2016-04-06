@@ -77,6 +77,7 @@ public class DetailFragment extends BaseFragment implements IDetailFragmentView 
 
         Picasso.with(activity)
                 .load(itemArtist.getBigAvatarUrl())
+                .resize(300, 300)
                 .into(avatar);
         StringBuffer allGenres = new StringBuffer();
 
