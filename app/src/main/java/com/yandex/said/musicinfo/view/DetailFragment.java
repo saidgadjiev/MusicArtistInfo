@@ -3,11 +3,14 @@ package com.yandex.said.musicinfo.view;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.yandex.said.musicinfo.R;
@@ -22,7 +25,7 @@ public class DetailFragment extends BaseFragment implements IDetailFragmentView 
 
     public static final String BUNDLE_ID = "bundleID";
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private ItemArtist itemArtist;
 
     public static DetailFragment newInstance(ItemArtist itemArtist) {
@@ -39,15 +42,15 @@ public class DetailFragment extends BaseFragment implements IDetailFragmentView 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity = activity;
+        this.activity = (AppCompatActivity) activity;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof Activity) {
-            activity = (Activity) context;
+        if (context instanceof AppCompatActivity) {
+            activity = (AppCompatActivity) context;
         }
     }
 
@@ -64,6 +67,10 @@ public class DetailFragment extends BaseFragment implements IDetailFragmentView 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        activity.getSupportActionBar().setTitle(itemArtist.getName());
+
         return inflater.inflate(R.layout.fragment_detail, container, false);
     }
 
@@ -77,6 +84,7 @@ public class DetailFragment extends BaseFragment implements IDetailFragmentView 
 
         Picasso.with(activity)
                 .load(itemArtist.getBigAvatarUrl())
+                .placeholder(R.drawable.loading)
                 .resize(300, 300)
                 .into(avatar);
         StringBuffer allGenres = new StringBuffer();

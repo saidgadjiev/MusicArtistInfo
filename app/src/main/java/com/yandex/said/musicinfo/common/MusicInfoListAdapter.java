@@ -64,7 +64,7 @@ public class MusicInfoListAdapter extends RecyclerView.Adapter<MusicInfoListAdap
         }
         holder.genres.setText(allGenres.toString());
         picasso.load(itemArtistList.get(position).getSmallAvatarUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.loading)
                 .into(holder.avatar);
         holder.name.setText(itemArtistList.get(position).getName());
         holder.albums.setText(String.valueOf(itemArtistList.get(position).getCountAlbums()));

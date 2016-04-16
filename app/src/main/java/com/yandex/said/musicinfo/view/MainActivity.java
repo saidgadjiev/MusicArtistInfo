@@ -3,6 +3,8 @@ package com.yandex.said.musicinfo.view;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Toast;
 
 import com.yandex.said.musicinfo.R;
 import com.yandex.said.musicinfo.common.BaseActivity;
@@ -30,7 +32,6 @@ public class MainActivity extends BaseActivity implements IMainActivityView, IHa
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        toolbar.setTitle("Исполнители");
         setSupportActionBar(toolbar);
         fragmentManager = getFragmentManager();
         ListFragment listFragment = (ListFragment) fragmentManager.findFragmentByTag("ListFragment");
@@ -43,6 +44,17 @@ public class MainActivity extends BaseActivity implements IMainActivityView, IHa
                     .replace(R.id.fragment_container, listFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            presenter.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+
+        return true;
     }
 
     @Override
