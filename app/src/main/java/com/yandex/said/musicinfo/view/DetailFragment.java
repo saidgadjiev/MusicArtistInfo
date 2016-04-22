@@ -1,27 +1,24 @@
 package com.yandex.said.musicinfo.view;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.yandex.said.musicinfo.R;
-import com.yandex.said.musicinfo.common.BaseFragment;
-import com.yandex.said.musicinfo.di.components.IMainActivityComponent;
 import com.yandex.said.musicinfo.model.ItemArtist;
 
 /**
  * Created by said on 30.03.16.
  */
-public class DetailFragment extends BaseFragment implements IDetailFragmentView {
+public class DetailFragment extends Fragment {
 
     public static final String BUNDLE_ID = "bundleID";
 
@@ -104,7 +101,6 @@ public class DetailFragment extends BaseFragment implements IDetailFragmentView 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.getComponent(IMainActivityComponent.class).inject(this);
     }
 
     @Override
@@ -115,25 +111,5 @@ public class DetailFragment extends BaseFragment implements IDetailFragmentView 
     @Override
     public void onPause() {
         super.onPause();
-    }
-
-    @Override
-    public void showProgressDialog() {
-
-    }
-
-    @Override
-    public void hideProgressDialog() {
-
-    }
-
-    @Override
-    public void startService() {
-
-    }
-
-    @Override
-    public void stopService() {
-
     }
 }

@@ -1,4 +1,4 @@
-package com.yandex.said.musicinfo.di;
+package com.yandex.said.musicinfo.logic.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

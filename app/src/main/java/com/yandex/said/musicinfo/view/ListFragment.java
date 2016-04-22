@@ -1,28 +1,26 @@
 package com.yandex.said.musicinfo.view;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.octo.android.robospice.SpiceManager;
 import com.pnikosis.materialishprogress.ProgressWheel;
 import com.yandex.said.musicinfo.R;
-import com.yandex.said.musicinfo.common.BaseFragment;
-import com.yandex.said.musicinfo.common.MusicInfoListAdapter;
-import com.yandex.said.musicinfo.di.components.IMainActivityComponent;
+import com.yandex.said.musicinfo.app.MusicInfoApp;
+import com.yandex.said.musicinfo.logic.adapter.MusicInfoListAdapter;
 import com.yandex.said.musicinfo.model.ItemArtist;
-import com.yandex.said.musicinfo.network.MusicInfoService;
 import com.yandex.said.musicinfo.presenter.ListFragmentPresenterImpl;
 
 import java.util.List;
@@ -35,19 +33,16 @@ import jp.wasabeef.recyclerview.animators.FadeInDownAnimator;
 /**
  * Created by said on 26.03.16.
  */
-public class ListFragment extends BaseFragment implements IListFragmentView {
+public class ListFragment extends Fragment implements IListFragmentView {
 
     @Inject
     ListFragmentPresenterImpl presenter;
-
-    protected SpiceManager spiceManager = new SpiceManager(MusicInfoService.class);
-
-    AppCompatActivity activity;
-    RecyclerView recyclerView;
-    MusicInfoListAdapter adapter;
-    RecyclerView.LayoutManager layoutManager;
-    View rootView;
-    ProgressWheel progressBar;
+    private AppCompatActivity activity;
+    private RecyclerView recyclerView;
+    private MusicInfoListAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private View rootView;
+    private ProgressWheel progressBar;
 
     public ListFragment() {
 
@@ -71,8 +66,10 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        MusicInfoApp.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        presenter.onCreate(this);
     }
 
     @Override
@@ -81,7 +78,6 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
             rootView = inflater.inflate(R.layout.fragment_list, container, false);
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
             progressBar = (ProgressWheel) activity.findViewById(R.id.progress_wheel);
-
             layoutManager = new LinearLayoutManager(activity);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setItemAnimator(new FadeInDownAnimator());
@@ -104,14 +100,12 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.getComponent(IMainActivityComponent.class).inject(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.init(this);
-        presenter.onResume(spiceManager);
+        presenter.onResume();
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         activity.getSupportActionBar().setTitle("Исполнители");
     }
@@ -123,27 +117,18 @@ public class ListFragment extends BaseFragment implements IListFragmentView {
     }
 
     @Override
-    public void showProgressDialog() {
+    public void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideProgressDialog() {
+    public void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
-    public void startService() {
-        if (!spiceManager.isStarted()) {
-            spiceManager.start(activity);
-        }
-    }
-
-    @Override
-    public void stopService() {
-        if (spiceManager.isStarted()) {
-            spiceManager.shouldStop();
-        }
+    public void showError(String message) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

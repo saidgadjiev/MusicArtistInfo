@@ -2,27 +2,23 @@ package com.yandex.said.musicinfo.view;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Toast;
 
 import com.yandex.said.musicinfo.R;
-import com.yandex.said.musicinfo.common.BaseActivity;
-import com.yandex.said.musicinfo.di.IHasComponent;
-import com.yandex.said.musicinfo.di.components.DaggerIMainActivityComponent;
-import com.yandex.said.musicinfo.di.components.IMainActivityComponent;
-import com.yandex.said.musicinfo.di.components.IMusicInfoAppComponent;
-import com.yandex.said.musicinfo.di.modules.MainActivityModule;
+import com.yandex.said.musicinfo.logic.di.components.DaggerViewDynamicComponent;
+import com.yandex.said.musicinfo.logic.di.components.ViewDynamicComponent;
+import com.yandex.said.musicinfo.logic.di.modules.ViewDynamicModule;
 import com.yandex.said.musicinfo.presenter.MainActivityPresenterImpl;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements IMainActivityView, IHasComponent<IMainActivityComponent> {
+public class MainActivity extends AppCompatActivity implements IMainActivityView {
 
     @Inject
     MainActivityPresenterImpl presenter;
 
-    private IMainActivityComponent mainActivityComponent;
+    private ViewDynamicComponent viewComponent;
     private FragmentManager fragmentManager;
 
     @Override
@@ -44,6 +40,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, IHa
                     .replace(R.id.fragment_container, listFragment)
                     .commit();
         }
+        setupComponent();
     }
 
     @Override
@@ -66,18 +63,13 @@ public class MainActivity extends BaseActivity implements IMainActivityView, IHa
         }
     }
 
-    @Override
-    protected void setupComponent(IMusicInfoAppComponent component) {
-        mainActivityComponent = DaggerIMainActivityComponent.builder()
-                .iMusicInfoAppComponent(component)
-                .mainActivityModule(new MainActivityModule(this))
-                .build();
-        mainActivityComponent.inject(this);
-    }
-
-    @Override
-    public IMainActivityComponent getComponent() {
-        return mainActivityComponent;
+    protected void setupComponent() {
+        if (viewComponent == null) {
+            viewComponent = DaggerViewDynamicComponent.builder()
+                    .viewDynamicModule(new ViewDynamicModule(this))
+                    .build();
+        }
+        viewComponent.inject(this);
     }
 
     @Override

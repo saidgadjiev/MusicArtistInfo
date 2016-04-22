@@ -1,27 +1,19 @@
-package com.yandex.said.musicinfo.common;
+package com.yandex.said.musicinfo.logic.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.yandex.said.musicinfo.R;
 import com.yandex.said.musicinfo.model.ItemArtist;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.security.auth.callback.Callback;
 
 /**
  * Created by said on 28.03.16.

@@ -17,8 +17,7 @@ public class ItemArtist implements Serializable {
     private int countAlbums;
     private String link;
     private String description;
-    private String smallAvatarUrl;
-    private String bigAvatarUrl;
+    private Avatar cover;
 
     public ItemArtist() {
     }
@@ -84,19 +83,19 @@ public class ItemArtist implements Serializable {
         return description;
     }
 
-    public void setSmallAvatarUrl(String smallAvatarUrl) {
-        this.smallAvatarUrl = smallAvatarUrl;
-    }
-
     public String getSmallAvatarUrl() {
-        return smallAvatarUrl;
-    }
-
-    public void setBigAvatarUrl(String bigAvatarUrl) {
-        this.bigAvatarUrl = bigAvatarUrl;
+        return cover.getSmall();
     }
 
     public String getBigAvatarUrl() {
-        return bigAvatarUrl;
+        return cover.getBig();
+    }
+
+    public void setCover(Avatar cover) {
+        this.cover = cover;
+    }
+
+    public Avatar getCover() {
+        return cover;
     }
 }
